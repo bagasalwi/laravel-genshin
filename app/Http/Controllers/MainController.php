@@ -70,10 +70,10 @@ class MainController extends Controller
             foreach($data['arr_images'] as $item){
                 $newArr[] = (object) array(
                             'name' => $item,
-                            'portrait' => $this->get_images($item, $this->portrait),
-                            'icon' => $this->get_images($item, $this->icon),
+                            // 'portrait' => $this->get_images($item, $this->portrait),
+                            // 'icon' => $this->get_images($item, $this->icon),
                             'elements' => $this->get_character_attribute($item, 'vision'),
-                            'elements_image' => $this->get_element_images($this->get_character_attribute($item, 'vision'))
+                            // 'elements_image' => $this->get_element_images($this->get_character_attribute($item, 'vision'))
                         );
             }
 
@@ -81,7 +81,7 @@ class MainController extends Controller
             $data['pathData'] =  $pathData;
             $data['pathImages'] =  $pathImages;
             
-            // dd($data);
+            dd($data['list']);
 
             return view('main.character.list', $data);
         }
@@ -107,15 +107,16 @@ class MainController extends Controller
     public function get_images($name = null, $type){
         $pathImages = $this->images . $this->characters . '/' . $name . '/' . $type;
 
-        // dd($type);
+        // dd($pathImages);
 
         if (!file_exists($pathImages)) {
             return "Fail name";
         }else{
             $base64 = 'data:image/png;base64,';
             $image = base64_encode(file_get_contents($pathImages));
+            $data = base64_decode($base64 . $image);
 
-            // dd($data);
+            file_put_contents($this->images . $this->characters . '/' . $name . '/' . $name . '.png', $data);
             return ($base64 . $image);
         }
     }
@@ -132,5 +133,49 @@ class MainController extends Controller
             // dd($data);
             return ($base64 . $image);
         }
+    }
+
+    public function convert_file_to_png(Request $request){
+        $pathData = $this->data . $this->characters;
+        $pathImages = $this->images . $this->characters;
+        $listData = scandir($pathData);
+        $listImages = scandir($pathImages);
+
+        $data['arr_data'] = collect(array_slice($listData, 2));
+        $data['arr_images'] = collect(array_slice($listImages, 2));
+        // $data['image'] = $this->get_images('albedo');
+
+        foreach($data['arr_images'] as $item){
+            // dd($this->images . $this->characters . '/' . $item . '/' . 'portrait.png');
+            $pathImagesPortrait = $this->images . $this->characters . '/' . $item . '/portrait';
+            $pathImagesIcon = $this->images . $this->characters . '/' . $item . '/icon';
+
+            if (!file_exists($pathImagesPortrait)) {
+                $message[] = $item . ' portrait failed';
+            }else{
+                $base64 = 'data:image/png;base64,';
+                $image = base64_encode(file_get_contents($pathImagesPortrait));
+                $data = base64_decode($image);
+                
+                file_put_contents($this->images . $this->characters . '/' . $item . '/' . 'portrait.png', $data);
+                unlink($this->images . $this->characters . '/' . $item . '/portrait');
+                $message[] = $item . ' portrait succeed';
+            }
+
+            if (!file_exists($pathImagesIcon)) {
+                $message[] = $item . ' icon failed';
+            }else{
+                $base64 = 'data:image/png;base64,';
+                $image = base64_encode(file_get_contents($pathImagesIcon));
+                $data = base64_decode($image);
+                
+                file_put_contents($this->images . $this->characters . '/' . $item . '/' . 'icon.png', $data);
+                unlink($this->images . $this->characters . '/' . $item . '/icon');
+                $message[] = $item . ' icon succeed';
+            }
+        } 
+        
+        return $message;
+        
     }
 }

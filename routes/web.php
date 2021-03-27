@@ -24,3 +24,5 @@ Route::prefix('/genshin')->group(function (){
     Route::get('/characters/{name}', [MainController::class, 'characters'])->name('genshin.characters.detail');
     Route::get('/artifacts', [MainController::class, 'artifacts'])->name('genshin.artifacts');
 });
+
+Route::get('/convert/{type}', [MainController::class, 'convert_file_to_png']);
