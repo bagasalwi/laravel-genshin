@@ -15,7 +15,7 @@
 <div class="container space-2">
     <div class="row">
         <div class="col-lg-5 mb-7 mb-lg-0">
-            <img class="img-fluid" src="{{ $imageData }}" alt="">
+            <img class="img-fluid" src="{{ asset($portrait) }}" alt="">
         </div>
 
         <div id="stickyBlockStartPoint" class="col-lg-7">
@@ -116,48 +116,54 @@
             <!-- End Sticky Block -->
         </div>
     </div>
+
+    <h1 class="h2">{{ $data['name'] }}'s Skills</h1>
     <div class="row">
-        @foreach ($data['skillTalents'] as $skill)
+        @foreach ($arr_skill as $skill)
             <div class="col-lg-4 mb-3 mb-lg-5">
-                <a class="card card-frame h-100" href="#">
+                <a class="card card-frame bg-dark h-100" href="#">
                     <div class="card-body">
                         <!-- Icon Block -->
                         <div class="media d-block d-sm-flex">
-                            {{-- <figure class="w-100 max-w-8rem mb-2 mb-sm-0 mr-sm-4">
-                                <img class="img-fluid" src="https://htmlstream.com/front/assets/svg/icons/icon-1.svg" alt="SVG">
-                            </figure> --}}
+                            <figure class="w-100 max-w-8rem mb-2 mb-sm-0 mr-sm-4">
+                                <img class="img-fluid" src="{{ asset($skill->img) }}" alt="SVG">
+                            </figure>
                             <div class="media-body">
-                                <small class="text-muted">{{ $skill['unlock'] }}</small>
-                                <h2 class="h3">{{ $skill['name'] }} </h2>
-                                <p class="font-size-1 text-body">{{ $skill['description'] }}</p>
+                                <small class="text-muted">{{ $skill->unlock }}</small>
+                                <h2 class="h5 text-light">{{ $skill->name }} </h2>
                             </div>
                         </div>
+                        <!-- End Icon Block -->
+                        <p class="font-size-1 text-body">{{ $skill->description }}</p>
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
+
+    <h1 class="h2">{{ $data['name'] }}'s Constellation</h1>
+    <div class="row">
+        @foreach ($arr_constellation as $conste)
+        {{-- {{ dd($conste) }} --}}
+            <div class="col-lg-4 mb-3 mb-lg-5">
+                <a class="card card-frame bg-dark h-100" href="#">
+                    <div class="card-body">
+                        <!-- Icon Block -->
+                        <div class="media d-block d-sm-flex">
+                            <figure class="w-100 max-w-8rem mb-2 mb-sm-0 mr-sm-4">
+                                <img class="img-fluid" src="{{ asset($conste->img) }}" alt="SVG">
+                            </figure>
+                            <div class="media-body">
+                                <small class="text-muted">{{ $conste->unlock }}</small>
+                                <h2 class="h5 text-light">{{ $conste->name }} </h2>
+                            </div>
+                        </div>
+                        <p class="font-size-1 text-body">{{ $conste->description }}</p>
                         <!-- End Icon Block -->
                     </div>
                 </a>
             </div>
         @endforeach
-        @foreach ($data['passiveTalents'] as $skill)
-            <div class="col-lg-4 mb-3 mb-lg-5">
-                <a class="card card-frame h-100" href="#">
-                    <div class="card-body">
-                        <!-- Icon Block -->
-                        <div class="media d-block d-sm-flex">
-                            {{-- <figure class="w-100 max-w-8rem mb-2 mb-sm-0 mr-sm-4">
-                                <img class="img-fluid" src="https://htmlstream.com/front/assets/svg/icons/icon-1.svg" alt="SVG">
-                            </figure> --}}
-                            <div class="media-body">
-                                <small class="text-muted">{{ $skill['unlock'] }}</small>
-                                <h2 class="h3">{{ $skill['name'] }} </h2>
-                                <p class="font-size-1 text-body">{{ $skill['description'] }}</p>
-                            </div>
-                        </div>
-                        <!-- End Icon Block -->
-                    </div>
-                </a>
-            </div>
-        @endforeach
-        
     </div>
 </div>
 <!-- End Description Section -->

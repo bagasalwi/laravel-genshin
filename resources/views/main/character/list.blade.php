@@ -37,12 +37,12 @@
                 <a class="card-body" href="{{ route('genshin.characters.detail',$char->name) }}">
                     <div class="media">
                         <div class="avatar avatar-sm mt-1 mr-3">
-                            <img class="avatar-img" src="{{ $char->icon }}" alt="Image Description">
+                            <img class="avatar-img" src="{{ asset($char->icon) }}" alt="Image Description">
                         </div>
                         <div class="media-body">
                             <div class="d-flex align-items-center">
                                 <span class="d-block text-dark font-weight-bold">{{ $char->name }}</span>
-                                <img class="ml-2" src="{{ $char->elements_image }}" alt="Image Description"
+                                <img class="ml-2" src="{{ asset($char->elements_image) }}" alt="Image Description"
                                     title="Top Vendor" width="16">
                             </div>
                             <small class="d-block text-body">{{ $char->elements }}</small>
