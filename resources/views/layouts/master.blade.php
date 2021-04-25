@@ -12,6 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
     {{-- Theme CSS --}}
+    <link rel="stylesheet" href="{{ URL::asset('assets/css/custom.css')}}">
     <link rel="stylesheet" href="{{ URL::asset('assets/css/main.min.css')}}">
     <link rel="stylesheet" href="{{ URL::asset('assets/css/vendor.min.css')}}">
 
@@ -30,6 +31,7 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="{{ URL::asset('assets/js/vendor.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/theme.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/theme.min.js') }}"></script>
 
     @yield('script')
